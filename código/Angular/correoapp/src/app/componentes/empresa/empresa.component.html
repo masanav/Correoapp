@@ -1,0 +1,56 @@
+<ng-container *ngIf="authService.hasRole('ROLE_ADMINISTRADOR')">
+
+    <h1 class="mb-3 d-flex justify-content-center">{{titulo}}</h1>
+
+    <button type="button" class="btn btn-outline-dark my-2 rounded-0" routerLink="/empresas/form">
+        Crear empresa
+    </button>
+    <div class="alert alert-info" *ngIf="empresas?.length==0">
+        No hay empresas en el sistema.
+    </div>
+
+    <table mat-table [dataSource]="empresas" class="mat-elevation-z8" style="width: 100%;">
+        <ng-container matColumnDef="Indice">
+            <th mat-header-cell *matHeaderCellDef> Indice </th>
+            <td mat-cell *matCellDef="let item"> {{item.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let item">{{item.nombre}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Dirección">
+            <th mat-header-cell *matHeaderCellDef> Direccion </th>
+            <td mat-cell *matCellDef="let item">{{item.direccion}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Correo">
+            <th mat-header-cell *matHeaderCellDef> Correo </th>
+            <td mat-cell *matCellDef="let item">{{item.correo}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Editar">
+            <th mat-header-cell *matHeaderCellDef> Editar </th>
+            <td mat-cell *matCellDef="let item">
+                <button mat-mini-fab color="accent" [routerLink]="['/empresas/form/', item.id]"
+                    routerLinkActive="router-link-active"><i class="material-icons sd-18">edit</i>
+                </button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Borrar">
+            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+            <td mat-cell *matCellDef="let item">
+                <button mat-mini-fab color="warn" (click)="eliminar(item)" *ngIf="(item?.id!=1)"><i class="material-icons sd-18">delete</i>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
+    </table>
+
+    <mat-paginator [length]="totalRegistros" [pageSize]="totalPorPagina" [pageIndex]="paginaActual"
+        [pageSizeOptions]="pageSizeOptions" (page)="paginar($event)" showFirstLastButtons class="float-left mx-2">
+    </mat-paginator>
+</ng-container>

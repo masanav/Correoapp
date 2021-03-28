@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img width="40" alt="Angular Logo"
+                src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+            Correo app</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"> <span
+                class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <ng-container>
+                    <li class="nav-item" *ngIf="authService.isAuthenticated()">
+                        <a class="nav-link" href="#" routerLink="/plantillas" routerLinkActive="active"> Plantillas </a>
+                    </li>
+                    <li class="nav-item" *ngIf="authService.isAuthenticated()">
+                        <a class="nav-link" href="#" routerLink="/ordenes" routerLinkActive="active"> Órdenes </a>
+                    </li>
+                    <li class="nav-item" *ngIf="authService.isAuthenticated()">
+                        <a class="nav-link" href="#" routerLink="/contactos" routerLinkActive="active"> Contactos </a>
+                    </li>
+                    <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMINISTRADOR')">
+                        <a class="nav-link" href="#" routerLink="/proveedores" routerLinkActive="active">
+                            Proveedor
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMINISTRADOR')">
+                        <a class="nav-link" href="#" routerLink="/empresas" routerLinkActive="active">
+                            Empresas
+                        </a>
+                    </li>
+                    <li class="nav-item"
+                        *ngIf="authService.hasRole('ROLE_ADMINISTRADOR') || authService.hasRole('ROLE_SOPORTE')">
+                        <a class="nav-link" href="#" routerLink="/perfiles" routerLinkActive="active">
+                            Perfiles
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="authService.isAuthenticated()">
+                        <a class="nav-link" href="#" routerLink="/salir" routerLinkActive="active">
+                            Salir
+                        </a>
+                    </li>
+                </ng-container>
+                <li class="nav-item" *ngIf="!authService.isAuthenticated()">
+                    <a class="nav-link" href="#" routerLink="/login" routerLinkActive="active"> Entrar </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
