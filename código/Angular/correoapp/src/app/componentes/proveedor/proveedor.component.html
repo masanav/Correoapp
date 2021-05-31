@@ -1,0 +1,51 @@
+<div class="card border-dark text-center col-sm-6 mx-auto">
+    <h4 class="card-header">{{titulo}}</h4>
+    <div class="card-body">
+
+        <form method="post" id="idp">
+            <label for="nombre" class="float-start">Nombre</label>
+            <input [(ngModel)]="proveedor.nombre" type="text" class="form-control form-control-lg" name="nombre" id="nombre"
+                placeholder="Nombre" autofocus required>
+            <div class="alert alert-danger" *ngIf="error?.nombre">{{error?.nombre}}</div>
+
+            <div class="form-group mt-2" class="my-3">
+                <label for="correo" class="float-start">Correo</label>
+                <input [(ngModel)]="proveedor.correo" type="mail" class="form-control form-control-lg" name="correo" id="correo"
+                    placeholder="Correo" required>
+                <div class="alert alert-danger" *ngIf="error?.correo">{{error?.correo}}</div>
+            </div>
+
+            <div class="form-group mt-2" class="my-3">
+                <label for="direccion" class="float-start">Dirección</label>
+                <input [(ngModel)]="proveedor.direccion" type="text" class="form-control form-control-lg" name="direccion" id="direccion"
+                    placeholder="Dirección" required>
+                <div class="alert alert-danger" *ngIf="error?.direccion">{{error?.direccion}}</div>
+            </div>
+
+            <div class="form-group mt-2" class="my-3">
+                <label for="horario" class="float-start">Horario</label>
+                <input [(ngModel)]="proveedor.horario" type="text" class="form-control form-control-lg" name="horario" id="horario"
+                    placeholder="Horario">
+                <div class="alert alert-danger" *ngIf="error?.horario">{{error?.horario}}</div>
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="telefono" class="float-start">Teléfono</label>
+                <input [(ngModel)]="proveedor.telefono" type="text" class="form-control form-control-lg" name="telefono" id="telefono"
+                    placeholder="Teléfono">
+                <div class="alert alert-danger" *ngIf="error?.telefono">{{error?.telefono}}</div>
+            </div>
+
+            <div class="form- mt-2" class="my-3">
+                <label for="url_direccion" class="float-start">Página web</label>
+                <input [(ngModel)]="proveedor.url_direccion" type="text" class="form-control form-control-lg" name="url_direccion"
+                    id="url_direccion" placeholder="Dirección web" required>
+                <div class="alert alert-danger" *ngIf="error?.url_direccion">{{error?.url_direccion}}</div>
+            </div>
+
+            <div class="form-group mt-2">
+                <input (click)='modificar()' type="submit" class="btn btn-lg btn-dark btn-block" value="Modificar">
+            </div>
+        </form>
+    </div>
+</div>

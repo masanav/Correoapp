@@ -1,0 +1,55 @@
+<h1 class="mb-3 d-flex justify-content-center">{{titulo}}</h1>
+
+<button type="button" class="btn btn-outline-dark my-2 rounded-0" routerLink="/plantillas/form">
+    Crear plantilla
+</button>
+<div class="alert alert-info" *ngIf="lista?.length==0">
+    No hay plantillas en el sistema.
+</div>
+<table mat-table [dataSource]="lista" class="mat-elevation-z8" style="width: 100%;">
+    <ng-container matColumnDef="Indice">
+        <th mat-header-cell *matHeaderCellDef> Indice </th>
+        <td mat-cell *matCellDef="let plantilla"> {{plantilla.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Asunto">
+        <th mat-header-cell *matHeaderCellDef> Asunto </th>
+        <td mat-cell *matCellDef="let plantilla">
+            <h5>{{plantilla.asunto}}</h5> {{(plantilla.texto.length > 80) ? ((plantilla.texto).slice(0, 80) + '...') : plantilla.texto}}>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Ordenar">
+        <th mat-header-cell *matHeaderCellDef> Ordenar </th>
+        <td mat-cell *matCellDef="let plantilla">
+            <button mat-mini-fab color="primary" [routerLink]="['/ordenes/enviar/', plantilla.id]" routerLinkActive="router-link-active" ><i class="material-icons sd-18">send</i> </button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Editar">
+        <th mat-header-cell *matHeaderCellDef> Editar </th>
+        <td mat-cell *matCellDef="let plantilla">
+            <button mat-mini-fab color="accent" [routerLink]="['/plantillas/form/', plantilla.id]" routerLinkActive="router-link-active" ><i class="material-icons sd-18">edit</i> </button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Borrar">
+        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+        <td mat-cell *matCellDef="let plantilla">
+            <button mat-mini-fab color="warn" (click)="eliminar(plantilla)"><i class="material-icons sd-18">delete</i> </button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let plantilla; columns: columnsToDisplay"></tr>
+</table>
+
+
+<mat-paginator [length]="totalRegistros"
+              [pageSize]="totalPorPagina"
+              [pageIndex]="paginaActual"
+              [pageSizeOptions]="pageSizeOptions"
+              (page) ="paginar($event)"
+              showFirstLastButtons
+              class="float-left mx-2">
+</mat-paginator>
+            

@@ -1,0 +1,74 @@
+<h1 class="mb-3 d-flex justify-content-center">{{titulo}}</h1>
+
+<button type="button" class="btn btn-outline-dark my-2 rounded-0" routerLink="/perfiles/form">
+    Crear perfil
+</button>
+<div class="alert alert-info" *ngIf="lista?.length==0">
+    No hay perfiles en el sistema.
+</div>
+
+<table mat-table [dataSource]="lista" class="mat-elevation-z8" style="width: 100%;">
+    <ng-container matColumnDef="Indice">
+        <th mat-header-cell *matHeaderCellDef> Indice </th>
+        <td mat-cell *matCellDef="let item"> {{item.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Estado">
+        <th mat-header-cell *matHeaderCellDef> Estado </th>
+        <td mat-cell *matCellDef="let item">{{item.enabled | estado}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Foto">
+        <th mat-header-cell *matHeaderCellDef> Foto </th>
+        <td mat-cell *matCellDef="let item">
+            <img class="image-holder" *ngIf="item?.fotolobHashCode" [src]="baseEndpoint + '/uploads/img/' + item.id + '?fotolobHashCode=' + item.fotolobHashCode" 
+            style="max-height: 40px; max-width: 64px;"/>
+            <img class="image-holder me-3" *ngIf="!item?.fotolobHashCode" src="./../../../assets/icon_no_photo.svg" 
+                style="max-height: 40px; max-width: 64px;"/>
+            </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let item">{{item.nombre}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Apellidos">
+        <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+        <td mat-cell *matCellDef="let item">{{item.apellidos}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Rol">
+        <th mat-header-cell *matHeaderCellDef> Rol </th>
+        <td mat-cell *matCellDef="let item">{{item.rol |rolnombre}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Editar">
+        <th mat-header-cell *matHeaderCellDef> Editar </th>
+        <td mat-cell *matCellDef="let item">
+            <button mat-mini-fab color="accent" [routerLink]="['/perfiles/form/', item.id]" *ngIf="authService.hasRole('ROLE_ADMINISTRADOR') || (item.rol>1 && !authService.hasRole('ROLE_ADMINISTRADOR'))"
+            routerLinkActive="router-link-active"><i class="material-icons sd-18">edit</i>
+        </button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Borrar">
+        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+        <td mat-cell *matCellDef="let item">
+            <button mat-mini-fab color="warn" (click)="eliminar(item)" *ngIf="(authService.hasRole('ROLE_ADMINISTRADOR') && perfil.id!=item.id) || (item.rol>1 && authService.hasRole('ROLE_SOPORTE') && perfil.id!=item.id)"><i class="material-icons sd-18">delete</i> </button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let item; columns: columnsToDisplay"></tr>
+</table>
+
+
+<mat-paginator [length]="totalRegistros"
+              [pageSize]="totalPorPagina"
+              [pageIndex]="paginaActual"
+              [pageSizeOptions]="pageSizeOptions"
+              (page) ="paginar($event)"
+              showFirstLastButtons
+              class="float-left mx-2">
+</mat-paginator>
+            

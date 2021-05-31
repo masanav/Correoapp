@@ -1,0 +1,158 @@
+<div class="card text-dark bg-light mb-3">
+    <h4 class="card-header">{{titulo}}</h4>
+    <div class="card-body">
+        <form>
+            <button class="btn btn-secondary my-2" routerLink="/perfiles/">
+                Volver
+            </button>
+            <br>
+            <label for="enabled">Estado:</label>&nbsp;&nbsp;{{ perfil_nuevo.enabled | estado}}
+            <br>
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input class="form-check-input" type="checkbox" name="enabled" [(ngModel)]="perfil_nuevo.enabled"
+                        aria-label="Estado de activación del perfil">
+                </div>
+                <div class="alert alert-danger" *ngIf="error?.enabled">
+                    {{error?.enabled}}
+                </div>
+            </div>
+
+            <div class="form-group mt-2" *ngIf="perfil_nuevo?.fotolobHashCode">
+                <label>Foto almacenada</label>
+                <br>
+                <img class="image-holder"
+                    [src]="'http://localhost:8090/api/aplicacion/perfiles' + '/uploads/img/' + perfil_nuevo.id + '?fotolobHashCode=' + perfil_nuevo.fotolobHashCode"
+                    class="img-thumbnail rounded" style="width: 500px; cursor: pointer;" />
+
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="formFile" *ngIf="perfil_nuevo?.fotolobHashCode">Cambiar foto</label>
+                <label for="formFile" *ngIf="!perfil_nuevo?.fotolobHashCode">Añadir foto</label>
+                <input class="form-control mt-n4" type="file" id="formFile" (change)="seleccionarFoto($event)">
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required class="form-control form-control-lg"
+                    [(ngModel)]="perfil_nuevo.username">
+                <div class="alert alert-danger" *ngIf="error?.username">
+                    {{error?.username}}
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required class="form-control form-control-lg"
+                    [(ngModel)]="perfil_nuevo.password">
+                <div class="alert alert-danger" *ngIf="error?.password">
+                    {{error?.password}}
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" required class="form-control form-control-lg"
+                    [(ngModel)]="perfil_nuevo.nombre">
+                <div class="alert alert-danger" *ngIf="error?.nombre">
+                    {{error?.nombre}}
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" name="apellidos" id="apellidos" required class="form-control form-control-lg"
+                    [(ngModel)]="perfil_nuevo.apellidos">
+                <div class="alert alert-danger" *ngIf="error?.apellidos">
+                    {{error?.apellidos}}
+                </div>
+            </div>
+            <div class="form-group mt-2" *ngIf="perfil_nuevo?.id">
+                <label for="intentos">Intentos</label>
+                <input type="number" name="intentos" id="intentos" class="form-control form-control-lg"
+                    [(ngModel)]="perfil_nuevo.intentos">
+                <div class="alert alert-danger" *ngIf="error?.intentos">
+                    {{error?.intentos}}
+                </div>
+            </div>
+<!--
+            <span *ngIf="authService.hasRole('ROLE_ADMINISTRADOR')">
+                <label for="empresa" class="mt-2">Empresa</label>
+                <div class="form-floating">
+                    <select class="form-select" #empresaseleccionada id="floatingSelect2"
+                        aria-label="Empresas disponibles" [(ngModel)]="perfil_nuevo.empresa" name="perfil_nuevo.empresa"
+                        [compareWith]="compararEmpresas">
+                        <option [ngValue]="undefined">--- Seleccione una empresa ---</option>
+                        <option *ngFor="let empresa of empresas" [ngValue]="empresa">
+                            {{empresa.id}} {{empresa.nombre}}
+                        </option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="error?.empresa">
+                        {{error?.empresa}}
+                    </div>
+                    <label for="floatingSelect2">Empresas disponibles</label>
+                </div>
+            </span>
+
+            <label for="rol" class="mt-2">Rol</label>
+            <div class="form-floating">
+
+                <select class="form-select" id="floatingSelect1" required aria-label="Roles disponibles" *ngIf="perfil.rol==1"
+                    [(ngModel)]="perfil_nuevo.rol" name="perfil_nuevo.rol">
+                    <option value=undefined>--- Seleccione un rol ---</option>
+                    <option value=1 *ngIf="perfil_nuevo.empresa?.id==1">ADMINISTRADOR</option>
+                    <option value=2>SOPORTE</option>
+                    <option value=3>Usuario</option>
+                </select>
+
+                <select class="form-select" id="floatingSelect1" required aria-label="Roles disponibles" *ngIf="perfil.rol==2"
+                    [(ngModel)]="perfil_nuevo.rol" name="perfil_nuevo.rol">
+                    <option value=undefined>--- Seleccione un rol ---</option>
+                    <option value=2>SOPORTE</option>
+                    <option value=3>Usuario</option>
+                </select>
+
+                <div class="alert alert-danger" *ngIf="error?.rol">
+                    {{error?.rol}}
+                </div>
+                <label for="floatingSelect1">Roles disponibles</label>
+            </div>
+
+        -->
+
+
+
+            <span *ngIf="authService.hasRole('ROLE_ADMINISTRADOR')">
+                <label for="empresa" class="mt-2">Empresa</label>
+                <div class="form-floating">
+                <select class="form-select" #empresaseleccionada id="floatingSelect2" aria-label="Empresas disponibles"
+                        [(ngModel)]="perfil_nuevo.empresa" name="perfil_nuevo.empresa" [compareWith]="compararEmpresas" (change)="onEmpresaSeleccionada($event)">
+                    <option [ngValue]="undefined">--- Seleccione una empresa ---</option>
+                    <option *ngFor="let empresa of empresas" [ngValue]="empresa">
+                        {{empresa.id}} {{empresa.nombre}}
+                    </option>
+                </select>
+                <div class="alert alert-danger" *ngIf="error?.empresa">{{error?.empresa}}</div>
+                <label for="floatingSelect2">Empresas disponibles</label>
+                </div>
+            </span>
+            <label for="rol" class="mt-2">Rol</label>
+            <div class="form-floating">
+
+                <select class="form-select" id="floatingSelect" aria-label="Roles disponibles"
+                    [(ngModel)]="perfil_nuevo.rol" name="perfil_nuevo.rol">
+                    <option value=undefined>--- Seleccione un rol ---</option>
+                    <option *ngFor="let rol of roles" [ngValue]="rol">
+                        {{rol |rolnombre}}
+                    </option>
+                </select>
+                <div class="alert alert-danger" *ngIf="error?.rol"> {{error?.rol}} </div>
+                <label for="floatingSelect">Roles disponibles</label>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary mb-1 mt-3" (click)="perfil_nuevo.id? editar():crear()">
+                    {{perfil_nuevo.id? 'Editar' : 'Crear'}}</button>
+            </div>
+
+        </form>
+    </div>
+</div>
