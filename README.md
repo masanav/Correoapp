@@ -31,7 +31,7 @@ La aplicación tiene seis microservicios que cumplen distintas funcionalidades:
 - Micro-usuarios: Es el servicio que gestiona las credenciales de los usuarios y tiene precargado tres tipos de roles distintos. 
 - Micro-aplicacion: Es la aplicación en sí misma. Gestiona las empresas, los contactos, las plantillas, los usuarios y orden los envíos de correos.
 
-### Microservicios reemplzables
+### Microservicios reemplazables
 
 Los microservicios son facilmente reemplazables, motivo por el cual he incuido dos microservicios extra con una variación mínima.
 
